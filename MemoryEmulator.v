@@ -23,14 +23,23 @@ module memory #(
     // ram - внутренняя память модуля
     reg [WIDTH - 1:0] ram [0:DEPTH - 1];
 
-    always @(posedge clock) begin
-        if (write) begin // запись
-            ram[addr] <= data_in;
+    // много always блоков каждый проверяющий что адрес совпадает 
+    // со своим номером и тогда в память записывается именно по этому номеру
+    generate
+        for (genvar i = 0; i < DEPTH; i = i+1) begin
+            always @(posedge clock) begin
+                if (write & addr == i) begin
+                    ram[i] <= data_in;
+                end
+            end
         end
+    endgenerate
 
+    // далее не нужно волноваться о записи, она запишется автоматически
+    // в одном из многих блоков сверху
+    always @(posedge clock) begin
         if (read & write) begin // чтение и запись одновременно
             data_out <= data_in;
-            ram[addr] <= data_in;
         end else if (read & !write) begin // только чтение
             data_out <= ram[addr];
         end
