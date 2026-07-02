@@ -43,8 +43,8 @@ module TB();
     end
 
     memory #(
-            .WIDTH(`WIDTH),
-            .DEPTH(`DEPTH)
+        .WIDTH(`WIDTH),
+        .DEPTH(`DEPTH)
     ) TB_memory (
         .clock(clock),
         .read(read),
