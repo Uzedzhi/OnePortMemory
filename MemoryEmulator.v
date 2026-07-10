@@ -1,3 +1,5 @@
+`include "MemoryEmulator_h.v"
+
 // ==============Однопортовая памяти============================
 // PARAMETERS:  DEPTH       - кол-во строк памяти
 //              .WIDTH       - ширина строки памяти
@@ -9,8 +11,8 @@
 // OUT:         data_out    - выходная строка памяти
 // ===============================================================
 module memory #(
-    parameter DEPTH     = 32,
-    parameter WIDTH     = 10,
+    parameter DEPTH     = `DEPTH,
+    parameter WIDTH     = `WIDTH,
     parameter ADDR_W    = $clog2(DEPTH)
 )(
     input                     clock,
